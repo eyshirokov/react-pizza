@@ -8,9 +8,16 @@ import Skeleton from '../components/PizzaItem/Skeleton';
 const Home = () => {
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [categoryId, setCategoryId] = useState(0);
+  const [sortType, setSortType] = useState({ name: 'популярности', sortProperty: 'rating' });
 
   React.useEffect(() => {
-    fetch('https://62f1f086b1098f150807a62c.mockapi.io/items')
+    setIsLoading(true);
+    fetch(
+      `https://62f1f086b1098f150807a62c.mockapi.io/items?${
+        categoryId > 0 ? `category=${categoryId}` : ''
+      }&sortBy=${sortType.sortProperty}&order=desc`,
+    )
       .then((response) => {
         return response.json();
       })
@@ -18,13 +25,13 @@ const Home = () => {
         setItems(json);
         setIsLoading(false);
       });
-  }, []);
+  }, [categoryId, sortType]);
 
   return (
     <div className="container">
       <div className="content__top">
-        <Categories />
-        <Sort />
+        <Categories value={categoryId} onChangeCategory={(id) => setCategoryId(id)} />
+        <Sort value={sortType} onChangeSort={(id) => setSortType(id)} />
       </div>
       <h2 className="content__title">Все пиццы</h2>
       <div className="content__items">
