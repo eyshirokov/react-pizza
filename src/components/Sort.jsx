@@ -4,9 +4,12 @@ function Sort({ value, onChangeSort }) {
   const [isVisible, setVisible] = useState(false);
   //const [activeIndex, setActiveIndex] = useState(0);
   const sortingBy = [
-    { name: 'популярности', sortProperty: 'rating' },
-    { name: 'цене', sortProperty: 'price' },
-    { name: 'алфавиту', sortProperty: 'title' },
+    { name: 'популярности ↑', sortProperty: 'rating', sortOrder:'asc' },
+    { name: 'популярности ↓', sortProperty: 'rating', sortOrder:'desc' },
+    { name: 'цене ↑', sortProperty: 'price', sortOrder:'asc' },
+    { name: 'цене ↓', sortProperty: 'price', sortOrder:'desc' },
+    { name: 'алфавиту ↑', sortProperty: 'title', sortOrder:'asc' },
+    { name: 'алфавиту ↓', sortProperty: 'title', sortOrder:'desc' },
   ];
 
   const onClickSelected = (index) => {
@@ -43,7 +46,7 @@ function Sort({ value, onChangeSort }) {
               <li
                 key={index}
                 onClick={() => onClickSelected(obj)}
-                className={obj.sortProperty === value.sortProperty ? 'active' : ''}>
+                className={obj.sortProperty === value.sortProperty && obj.sortOrder === value.sortOrder ? 'active' : ''}>
                 {obj.name}
               </li>
             ))}
